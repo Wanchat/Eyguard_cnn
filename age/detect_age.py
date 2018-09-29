@@ -15,7 +15,7 @@ ap.add_argument("-c", "--camera", default=1,
     help="index camera")
 args = vars(ap.parse_args())
 
-cap = cv2.VideoCapture(args["camera"])
+cap = cv2.VideoCapture(0)
 
 face_detect = cv2.CascadeClassifier(r"D:\code_python\data\haarcascade_frontalface_default.xml")
 # load the trained convolutional neural network

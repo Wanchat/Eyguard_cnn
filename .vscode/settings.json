@@ -1,0 +1,7 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.mypyEnabled": true,
+    "python.linting.enabled": true,
+    "git.ignoreLimitWarning": true,
+    "python.pythonPath": "C:\\Python36\\python.exe"
+}

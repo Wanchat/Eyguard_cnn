@@ -15,7 +15,7 @@ ap.add_argument("-c", "--camera", default=1,
     help="index camera")
 args = vars(ap.parse_args())
 
-cap = cv2.VideoCapture(args["camera"])
+cap = cv2.VideoCapture(0)
 
 face_detect = cv2.CascadeClassifier(r"D:\code_python\data\haarcascade_frontalface_default.xml")
 
@@ -27,13 +27,13 @@ time.sleep(2.0)
 
 while True:
     _, frame = cap.read()
-    orig = frame.copy()
-    gray = cv2.cvtColor(orig, cv2.COLOR_BGR2GRAY)
+    orig_frame = frame.copy()
+    gray = cv2.cvtColor(orig_frame, cv2.COLOR_BGR2GRAY)
     face = face_detect.detectMultiScale(gray, 1.3, 5)
 
     for (x, y, w, h) in face:
-        cv2.rectangle(orig, (x, y), (x + w, y + h), (255, 255, 255), 2)
-        face_n = orig[y:y + h, x:x + w]
+        cv2.rectangle(orig_frame, (x, y), (x + w, y + h), (255, 255, 255), 2)
+        face_n = orig_frame[y:y + h, x:x + w]
 
     # pre-process the image for classification
         face_n = cv2.resize(face_n, (28, 28))
@@ -53,14 +53,16 @@ while True:
         fontPath = r"D:\code_python\data\Prompt-Regular.ttf"
 
         if label == "woman":
-            orig = text(orig, (x, y+h+7), fontPath, label_text, 20,(102,0,255))
+            orig_frame = text(
+                orig_frame, (x, y+h+7), fontPath, label_text, 20,(102,0,255))
         else:
-            orig = text(orig, (x, y+h+7), fontPath, label_text, 20,(255,102,102))
-
+            orig_frame = text(
+                orig_frame, (x, y+h+7), fontPath, label_text, 20,(255,102,102))
 
         print("estimate.... {}, {:.2f}".format(label, score))
 
-    cv2.imshow("Frame", orig)
+    cv2.imshow("Frame", orig_frame)
+
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
